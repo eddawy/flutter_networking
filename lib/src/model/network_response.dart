@@ -51,7 +51,7 @@ class NetworkResponse<T> {
       if (_dataOnSuccess != null) {
         return success(_dataOnSuccess as T);
       } else {
-        return success(true as T);
+        return success(rawData as T);
       }
     } else {
       return failure(_errorType!);
