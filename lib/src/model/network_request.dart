@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+
 class NetworkRequest {
   final String method;
 
@@ -5,6 +7,7 @@ class NetworkRequest {
   final String endpointVersion;
 
   final Map<String, dynamic>? body;
+  final FormData? formData;
 
   final Map<String, String> _queryParameters = {};
   final Map<String, String> _headers = {};
@@ -13,36 +16,42 @@ class NetworkRequest {
     required this.endpoint,
     this.endpointVersion = '',
     this.body,
+    this.formData,
   }) : method = 'GET';
 
   NetworkRequest.patch({
     required this.endpoint,
     this.endpointVersion = '',
     this.body,
+    this.formData,
   }) : method = 'PATCH';
 
   NetworkRequest.post({
     required this.endpoint,
     this.endpointVersion = '',
     this.body,
+    this.formData,
   }) : method = 'POST';
 
   NetworkRequest.put({
     required this.endpoint,
     this.endpointVersion = '',
     this.body,
+    this.formData,
   }) : method = 'PUT';
 
   NetworkRequest.options({
     required this.endpoint,
     this.endpointVersion = '',
     this.body,
+    this.formData,
   }) : method = 'OPTIONS';
 
   NetworkRequest.delete({
     required this.endpoint,
     this.endpointVersion = '',
     this.body,
+    this.formData,
   }) : method = 'DELETE';
 
   NetworkRequest({
@@ -50,7 +59,27 @@ class NetworkRequest {
     required this.endpoint,
     this.endpointVersion = '',
     this.body,
+    this.formData,
   });
+
+  // Convenience constructors for FormData requests
+  NetworkRequest.postFormData({
+    required this.endpoint,
+    this.endpointVersion = '',
+    required this.formData,
+  }) : method = 'POST', body = null;
+
+  NetworkRequest.putFormData({
+    required this.endpoint,
+    this.endpointVersion = '',
+    required this.formData,
+  }) : method = 'PUT', body = null;
+
+  NetworkRequest.patchFormData({
+    required this.endpoint,
+    this.endpointVersion = '',
+    required this.formData,
+  }) : method = 'PATCH', body = null;
 
   void addQueryParameter(String key, String value) {
     _queryParameters[key] = value;
@@ -63,4 +92,8 @@ class NetworkRequest {
   Map<String, dynamic> get queryParameters => _queryParameters;
 
   Map<String, String> get headers => _headers;
+
+  /// Returns the data to be sent in the request body
+  /// Prioritizes formData over body if both are provided
+  dynamic get requestData => formData ?? body;
 }

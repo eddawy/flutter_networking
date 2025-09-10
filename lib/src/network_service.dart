@@ -302,7 +302,7 @@ class NetworkService {
 
     return _dio.request(
       request.endpoint,
-      data: request.body,
+      data: request.requestData,
       queryParameters: request.queryParameters,
       options: options,
     );
