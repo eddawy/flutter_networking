@@ -62,25 +62,6 @@ class NetworkRequest {
     this.formData,
   });
 
-  // Convenience constructors for FormData requests
-  NetworkRequest.postFormData({
-    required this.endpoint,
-    this.endpointVersion = '',
-    required this.formData,
-  }) : method = 'POST', body = null;
-
-  NetworkRequest.putFormData({
-    required this.endpoint,
-    this.endpointVersion = '',
-    required this.formData,
-  }) : method = 'PUT', body = null;
-
-  NetworkRequest.patchFormData({
-    required this.endpoint,
-    this.endpointVersion = '',
-    required this.formData,
-  }) : method = 'PATCH', body = null;
-
   void addQueryParameter(String key, String value) {
     _queryParameters[key] = value;
   }
