@@ -6,6 +6,7 @@ enum NetworkErrorType {
   forbidden, //403
   noData, //404
   unprocessable, //422
+  featureUnavailable,
   badConnection,
   server, //500
   other,

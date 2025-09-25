@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import 'package:network/src/create_refresh_access_token_options.dart';
+import 'package:network/src/feature_unavailable_exception.dart';
 import 'package:network/src/interceptor/access_token_interceptor.dart';
 import 'package:network/src/interceptor/logging_intercepter.dart';
 import 'package:network/src/json_parser.dart';
@@ -309,6 +310,10 @@ class NetworkService {
   }
 
   NetworkErrorType _getErrorType(DioException dioException) {
+    if (dioException.error is FeatureUnavailableException) {
+      return NetworkErrorType.featureUnavailable;
+    }
+
     switch (dioException.type) {
       case DioExceptionType.connectionTimeout:
       case DioExceptionType.sendTimeout:
